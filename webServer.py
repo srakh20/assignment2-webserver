@@ -41,7 +41,7 @@ def webServer(port=13331):
         "HTTP/1.1 200 OK\r\n"
         "Connection: keep-alive\r\n"
         "Content-Type: text/html\r\n"
-        "Host: myhost.com\r\n"
+        "Server: myserver.com\r\n"
         "\r\n"
       )
 
