@@ -21,10 +21,8 @@ def webServer(port=13331):
     
     print('Ready to serve...')
     connectionSocket, addr = serverSocket.accept()#Fill in start -are you accepting connections?     #Fill in end
-    print(addr)
     try:
       message = connectionSocket.recv(1024)#Fill in start -a client is sending you a message   #Fill in end
-      print(message, '::', message.split()[0], ':', message.split()[1])
 
       filename = message.split()[1]
       #opens the client requested file.
@@ -38,7 +36,15 @@ def webServer(port=13331):
 
       #Content-Type is an example on how to send a header as bytes. There are more!
       #outputdata = b"Content-Type: text/html; charset=UTF-8\r\n"
-      outputdata = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n"
+      #outputdata = "HTTP/1.1 200 OK\r\nContent-Type: text/html;Connection: keep-alive\r\n\r\n"
+      outputdata = (
+        "HTTP/1.1 200 OK\r\n"
+        "Connection: keep-alive\r\n"
+        "Content-Type: text/html\r\n"
+        "Host: myhost.com\r\n"
+        "\r\n"
+      )
+
       #Note that a complete header must end with a blank line, creating the four-byte sequence "\r\n\r\n" Refer to https://w3.cs.jmu.edu/kirkpams/OpenCSF/Books/csf/html/TCPSockets.html
  
       #Fill in end
@@ -61,7 +67,7 @@ def webServer(port=13331):
       # Send response message for invalid request due to the file not being found (404)
       # Remember the format you used in the try: block!
       #Fill in start
-      connectionSocket.send(b"\nHTTP/1.1 404 Not Found\r\n")
+      connectionSocket.send(b"\nHTTP/1.1 404 Not Found\r\n\r\n")
       #Fill in end
 
 
